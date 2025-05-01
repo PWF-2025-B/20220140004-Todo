@@ -1,25 +1,26 @@
 ## 1. Todo Completed
-![alt text](<Screenshot 2025-05-01 185426.png>)
+![alt text](<screenshoot/tugas6/todocompleted.png>)
 
 ## 2. Todo Uncompleted
-![alt text](<Screenshot 2025-05-01 185627-1.png>)
+![alt text](<screenshoot/tugas6/todouncomplete.png>)
 
 ## 3. Todo Edited
-![alt text](<Screenshot 2025-05-01 185711-1.png>)
-![alt text](<Screenshot 2025-05-01 185725.png>)
+![alt text](<screenshoot/tugas6/edittodo.png>)
+![alt text](<screenshoot/tugas6/updatetodo.png>)
 
 ## 4. Todo Deleted
-![alt text](<Screenshot 2025-05-01 185755.png>)
+![alt text](<screenshoot/tugas6/tododelete.png>)
 
 ## 5. Todo Delete All Completed Todo
-![alt text](<Screenshot 2025-05-01 185842.png>)
+![alt text](<screenshoot/tugas6/deleteall.png>)
 
 ## 6. User Make Admin
-![alt text](<Screenshot 2025-05-01 190345.png>)
+![alt text](<screenshoot/tugas6/makeadmin.png>)
 
 ## 7. User Remove Admin
-![alt text](<Screenshot 2025-05-01 190450.png>)
+![alt text](<screenshoot/tugas6/removeadmin.png>)
 
 ## 8. User Delete
-![alt text](<Screenshot 2025-05-01 190411.png>) ![alt text](<Screenshot 2025-05-01 190400.png>)
+![alt text](<screenshoot/tugas6/konfirmdelete.png>)
+![alt text](<screenshoot/tugas6/deleteuser.png>)
 
