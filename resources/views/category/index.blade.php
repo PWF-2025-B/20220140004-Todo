@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Todo') }}
+            {{ __('Category') }}
         </h2>
     </x-slot>
 
@@ -10,7 +10,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-xl text-gray-900 dark:text-gray-100">
                     <div class="flex items-center justify-between">
-                        <x-create-button href="{{ route('todo.create') }}">
+                        <x-create-button href="{{ route('category.create') }}">
                         </x-create-button>
                     </div>
 
@@ -36,70 +36,38 @@
                         <thead class="text-sm text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th class="px-6 py-3">Title</th>
-                                <th class="px-6 py-3">Category</th>
-                                <th class="px-6 py-3">Status</th>
+                                <th class="px-6 py-3">Todo</th>
                                 <th class="px-6 py-3">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($todos as $data)
+                            @forelse ($categories as $data)
                                 <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
                                     <td class="px-6 py-4 font-medium text-white dark:text-gray-100">
-                                        <a href="{{ route('todo.edit', $data) }}" class="hover:underline text-xs">
+                                        <a href="{{ route('category.edit', $data) }}" class="hover:underline text-xs">
                                             {{ $data->title }}
                                         </a>
                                     </td>
 
-                                    <td class="px-6 py-4 font-medium text-white dark:text-gray-100 text-xs">
-                                        {{ $data->category?->title ?? 'No Category' }}
-                                    </td>
-
                                     <td class="px-6 py-4">
-                                        @if (!$data->is_done)
-                                            <span class="inline-block whitespace-nowrap rounded-full bg-red-100 px-3 py-1 text-sm font-medium text-red-800 dark:bg-red-900 dark:text-red-300">
-                                                On Going
-                                            </span>
-                                        @else
-                                            <span class="inline-block whitespace-nowrap rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800 dark:bg-green-900 dark:text-green-300">
-                                                Completed
-                                            </span>
-                                        @endif
+                                        {{ $data->todos_count }} <!-- this is the count -->
                                     </td>
 
 
                                     <td class="px-6 py-4">
                                         <div class="flex gap-2">
-                                            @if (!$data->is_done)
-                                                <form action="{{ route('todo.complete', $data) }}" method="POST">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <button type="submit"
-                                                    class="text-green-600 hover:underline dark:text-green-400 text-xs">
-                                                    Complete
-                                                </button>
-                                                </form>
-                                            @else
-                                                <form action="{{ route('todo.uncomplete', $data) }}" method="POST">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <button type="submit"
-                                                    class="text-yellow-600 hover:underline dark:text-yellow-400 text-xs">
-                                                    Uncomplete
-                                                </button>
-                                                </form>
-                                            @endif
-
-                                            <form action="{{ route('todo.destroy', $data) }}" method="POST">
+                                            <!-- Delete form for category -->
+                                            <form action="{{ route('category.destroy', $data) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                    class="text-red-600 hover:underline dark:text-red-400 text-xs">
+                                                        class="text-red-600 hover:underline dark:text-red-400 text-xs">
                                                     Delete
                                                 </button>
                                             </form>
-
                                         </div>
                                     </td>
+
                                 </tr>
                             @empty
                                 <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700 border-gray-200">
@@ -111,17 +79,6 @@
                         </tbody>
                     </table>
                 </div>
-                @if ($todosCompleted > 1)
-                <div class="p-6 text-xl text-gray-900 dark:text-gray-100">
-                    <form action="{{ route('todo.deleteallcompleted') }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <x-primary-button>
-                            Delete All Completed Tasks
-                        </x-primary-button>
-                    </form>
-                </div>
-            @endif
             </div>
         </div>
     </div>

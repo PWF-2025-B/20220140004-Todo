@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Todo; // Tambahkan ini
+use App\Models\Todo;
+use App\Models\Category; // Tambahkan ini
 use Illuminate\Support\Facades\Auth;
 
 class TodoController extends Controller
@@ -23,17 +24,21 @@ class TodoController extends Controller
 
     public function create()
     {
-        return view('todo.create');
+        // Get categories belonging to the authenticated user
+        $categories = Category::where('user_id', Auth::id())->get();
+        return view('todo.create', compact('categories'));
     }
 
     public function edit(Todo $todo)
     {
         if (Auth::id() === $todo->user_id) {
-            return view('todo.edit', compact('todo'));
+            $categories = Category::where('user_id', Auth::id())->get();
+            return view('todo.edit', compact('todo', 'categories'));
         }
 
         return redirect()->route('todo.index')->with('danger', 'You are not authorized to edit this todo!');
     }
+
 
     public function update(Request $request, Todo $todo)
     {
@@ -43,14 +48,17 @@ class TodoController extends Controller
 
         $request->validate([
             'title' => 'required|max:255',
+            'category_id' => 'nullable|exists:categories,id',
         ]);
 
         $todo->update([
             'title' => ucfirst($request->title),
+            'category_id' => $request->category_id,
         ]);
 
         return redirect()->route('todo.index')->with('success', 'Todo updated successfully!');
     }
+
 
     public function complete(Todo $todo)
     {
@@ -82,14 +90,19 @@ class TodoController extends Controller
     {
         $request->validate([
             'title' => 'required|string|max:255',
+            'category_id' => 'required|exists:categories,id', // Ensure the category exists
         ]);
 
+        // Create the todo and associate it with the selected category
         $todo = Todo::create([
             'title' => ucfirst($request->title),
             'user_id' => Auth::id(),
+            'category_id' => $request->category_id, // Store the selected category ID
         ]);
+
         return redirect()->route('todo.index')->with('success', 'Todo Created Successfully');
     }
+
 
     public function destroy(Todo $todo)
     {

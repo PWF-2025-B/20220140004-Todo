@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TodoController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -26,10 +27,14 @@ Route::middleware('auth')->group(function () {
     // Route::patch('/todo/{todo}', [TodoController::class, 'update'])->name('todo.update');
     Route::delete('/todo/{todo}', [TodoController::class, 'destroy'])->name('todo.destroy');
 
+    Route::resource('category', \App\Http\Controllers\CategoryController::class);
+
+
     Route::patch('/todo/{todo}/complete',[TodoController::class, 'complete'])->name('todo.complete');
     Route::patch('/todo/{todo}/incomplete',[TodoController::class, 'uncomplete'])->name('todo.uncomplete');
     Route::delete('/todo', [TodoController::class, 'destroyCompleted'])->name('todo.deleteallcompleted');
 });
+
 
 Route::middleware('auth', 'admin')->group(function () {
     Route::resource('user', UserController::class)->except(['show']);
