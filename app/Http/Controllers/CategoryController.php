@@ -11,15 +11,13 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        $userId = Auth::id();
-        $categories = Category::withCount('todos') // count todos per category
-            ->where('user_id', $userId)
-            ->get();
 
-        return view('category.index', compact('categories'));
-    }
+     public function index()
+{
+    $categories = Category::with('todos')->withCount('todos')
+    ->where('user_id', Auth::id())->get();
+    return view('category.index', compact('categories'));
+}
 
     /**
      * Show the form for creating a new resource.
